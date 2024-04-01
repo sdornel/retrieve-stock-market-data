@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { app } = require('./server');
-require('dotenv').config();
+require('./websocket/websocket-service'); // required for websocket to open. do not remove unless you know for sure the websocket can open
 
 async function fetchCandlestickData(symbol, interval, start_date, end_date) {
     try {

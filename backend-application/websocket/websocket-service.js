@@ -49,4 +49,4 @@ var unsubscribe = (symbol) => {
     finnhubWs.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}))
 }
 
-module.exports = { broadcastData, unsubscribe };
+module.exports = { unsubscribe };
