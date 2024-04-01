@@ -1,30 +1,6 @@
-const express = require('express');
 const axios = require('axios');
-const { broadcastData } = require('./websocket/websocket-service');
-const { wss, server, app } = require('./server');
+const { app } = require('./server');
 require('dotenv').config();
-
-// const PORT = process.env.PORT || 3000;
-
-// const app = express();
-// const server = http.createServer(app);
-
-// // Create a WebSocket server on top of the HTTP server
-// const wss = new WebSocket.Server({ server });
-
-// // When your WebSocket server gets a new connection
-// wss.on('connection', connection = (ws) => {
-//     console.log('A client connected');
-//     ws.send(JSON.stringify({ message: 'Welcome! Connection established.' }));
-//     ws.on('error', (error) => {
-//         console.error('Error in client WebSocket connection:', error);
-//     });
-//     // onOpenFinnhubSocket(wss);
-//     ws.on('close', () => {
-//         console.log('Client disconnected');
-//         unsubscribe(wss, 'AAPL');
-//     });
-// });
 
 async function fetchCandlestickData(symbol, interval, start_date, end_date) {
     try {
@@ -55,7 +31,3 @@ app.get('/api/fetchCandlestickData', (req, res) => {
         res.send(JSON.stringify(error));
     });
 });
-
-// server.listen(PORT, () => {
-//     console.log(`Server is running on port ${PORT}`);
-// });
