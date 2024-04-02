@@ -9,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class StockMarketOptionsSelectorComponent {
 
+  constructor() {}
+
+  // i will require a form for this component
 }
