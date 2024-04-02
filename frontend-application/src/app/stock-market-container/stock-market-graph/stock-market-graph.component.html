@@ -1,1 +1,8 @@
-<p>stock-market-graph works!</p>
+<div id="chart" *ngIf="series[0].data.length > 0">
+    <apx-chart
+        [series]="series"
+        [chart]="chart"
+        [xaxis]="xaxis"
+        [title]="title">
+      </apx-chart>
+</div>
