@@ -1,1 +1,27 @@
-<p>stock-market-options-selector works!</p>
+<form [formGroup]="optionsForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="symbol">Symbol:</label>
+      <input id="symbol" type="text" formControlName="symbol">
+    </div>
+    <div>
+      <label for="interval">Interval:</label>
+      <select id="interval" formControlName="interval">
+        <option value="1week">1 week</option>
+        <option value="1month">1 month</option>
+        <option value="6months">6 months</option>
+        <option value="1year">1 year</option>
+        <option value="3years">3 years</option>
+        <option value="5years">5 years</option>
+        <option value="15years">15 years</option>
+      </select>
+    </div>
+    <div>
+      <label for="startDate">Start Date:</label>
+      <input id="startDate" type="date" formControlName="startDate">
+    </div>
+    <div>
+      <label for="endDate">End Date:</label>
+      <input id="endDate" type="date" formControlName="endDate">
+    </div>
+    <button type="submit">Submit</button>
+</form>
