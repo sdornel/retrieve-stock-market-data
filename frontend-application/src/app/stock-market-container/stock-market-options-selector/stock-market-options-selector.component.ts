@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-stock-market-options-selector',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatInputModule, MatButtonModule, MatSelectModule],
   templateUrl: './stock-market-options-selector.component.html',
   styleUrl: './stock-market-options-selector.component.css'
 })
@@ -19,14 +22,15 @@ export class StockMarketOptionsSelectorComponent implements OnInit {
 
   setupForm() {
     this.optionsForm = new FormGroup({
-      symbol: new FormControl(''),
-      interval: new FormControl(''),
-      startDate: new FormControl(''),
-      endDate: new FormControl('')
+      symbol: new FormControl('', Validators.required,),
+      interval: new FormControl('', Validators.required,),
+      startDate: new FormControl('', Validators.required,),
+      endDate: new FormControl('', Validators.required,)
     });
   }
 
   onSubmit() {
+    debugger
     console.log(this.optionsForm.value);
   }
 }

@@ -22,5 +22,5 @@
       <label for="endDate">End Date:</label>
       <input id="endDate" type="date" formControlName="endDate">
     </div>
-    <button type="submit">Submit</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!optionsForm.valid">Submit</button>
 </form>
