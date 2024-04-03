@@ -35,6 +35,7 @@ export class StockMarketGraphComponent implements OnInit {
     text: '',
     align: 'left'
   };
+  stockData: Array<string> = [];
 
   constructor(
     private stockMarketApiService: StockMarketApiService,
@@ -45,6 +46,10 @@ export class StockMarketGraphComponent implements OnInit {
     // see https://blogs.halodoc.io/handling-subscription-angular/ when you have child components
     this.stockMarketApiService.fetchCandlestickData().pipe(takeUntil(this.$destroy)).subscribe((data) => {
       this.title.text = data.meta.symbol;
+      this.stockData.push(data.meta.currency);
+      this.stockData.push(data.meta.exchange);
+      this.stockData.push(data.meta.exchange_timezone);
+
       this.series[0].data = data.values.map((item: any) => ({
         x: item.datetime,
         y: [item.open, item.high, item.low, item.close]
