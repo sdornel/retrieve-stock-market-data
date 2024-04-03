@@ -17,12 +17,16 @@
   <div class="container">
     <h1>Welcome to Your Financial Dashboard</h1>
     <p class="subtitle">Stay informed. Make confident decisions.</p>
-    <div class="content">
-      <!-- Your Angular component's content goes here -->
-      <app-stock-market-graph></app-stock-market-graph>
+    <div class="dashboard-container">
+      <div class="content">
+        <app-stock-market-graph></app-stock-market-graph>
+      </div>
+      <div class="sidebar">
+        <app-stock-market-options-selector></app-stock-market-options-selector>
+      </div>
     </div>
   </div>
-  
+  <br/>
   <footer class="footer">
     <div class="container">
       <p>&copy; 2024 Your Company. All rights reserved.</p>
