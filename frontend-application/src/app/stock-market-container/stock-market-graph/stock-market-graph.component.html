@@ -1,9 +1,13 @@
 <div id="chart" *ngIf="series[0].data.length > 0">
-  <h3>Placeholder</h3>
+  <h4>{{ title.text }}</h4>
+  <p>Interval: {{ interval }}</p>
+  <p>Start Date: {{ startDate | date: 'mediumDate' }}</p>
+  <p>End Date: {{ endDate | date: 'mediumDate' }}</p>
+  <!-- tomorrow make flex columns for the above data -->
     <apx-chart
         [series]="series"
         [chart]="chart"
         [xaxis]="xaxis"
-        [title]="title">
+        >
       </apx-chart>
 </div>
