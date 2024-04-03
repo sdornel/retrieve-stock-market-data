@@ -3,11 +3,13 @@ import { ApexAxisChartSeries, ApexChart, ApexTitleSubtitle, ApexXAxis, ApexYAxis
 import { StockMarketApiService } from '../../services/stock-market-api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { CommonModule, NgIf } from '@angular/common';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-stock-market-graph',
   standalone: true,
-  imports: [NgApexchartsModule, NgIf, CommonModule],
+  imports: [NgApexchartsModule, NgIf, CommonModule, MatGridListModule, MatCardModule],
   providers: [StockMarketApiService],
   templateUrl: './stock-market-graph.component.html',
   styleUrl: './stock-market-graph.component.css'
@@ -54,8 +56,8 @@ export class StockMarketGraphComponent implements OnInit {
       this.exchange = data.meta.exchange;
       this.exchangeTimezone = data.meta.exchange_timezone;
       this.interval = data.meta.interval;
-      this.startDate = data.meta.start_date;
-      this.endDate = data.meta.end_date;
+      this.startDate = data.values[0].datetime;
+      this.endDate = data.values[data.values.length - 1].datetime;
       // i believe i am forced to use the USD currency and exchanges. need to decide what to "allow" the user to do and see
       // i do not want to pay money for this API
 
