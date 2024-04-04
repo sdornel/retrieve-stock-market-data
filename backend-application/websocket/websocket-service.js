@@ -7,9 +7,9 @@ const finnhubWs = new WebSocket(`wss://ws.finnhub.io?token=${process.env.FINNHUB
 
 finnhubWs.on('open', () => {
     console.log('Connected to Finnhub WebSocket');
-    finnhubWs.send(JSON.stringify({ 'type': 'subscribe', 'symbol': 'AAPL' }));
-    finnhubWs.send(JSON.stringify({ 'type': 'subscribe', 'symbol': 'BINANCE:BTCUSDT' }));
-    finnhubWs.send(JSON.stringify({ 'type': 'subscribe', 'symbol': 'IC MARKETS:1' }));
+    // finnhubWs.send(JSON.stringify({ 'type': 'subscribe', 'symbol': 'AAPL' }));
+    // finnhubWs.send(JSON.stringify({ 'type': 'subscribe', 'symbol': 'BINANCE:BTCUSDT' }));
+    // finnhubWs.send(JSON.stringify({ 'type': 'subscribe', 'symbol': 'IC MARKETS:1' }));
 });
 
 function broadcastData(data) {
