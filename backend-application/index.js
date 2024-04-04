@@ -15,15 +15,20 @@ async function fetchCandlestickData(symbol, interval, start_date, end_date) {
 }
 
 // Example usage:
-const symbol = 'AAPL'; // Example stock symbol (Apple Inc.)
-const interval = '1day'; // Interval for candlesticks (e.g., '1min', '1hour', '1day')
-const start_date = '2022-01-01'; // Start date (YYYY-MM-DD)
-const end_date = '2022-01-31'; // End date (YYYY-MM-DD)
+// let symbol = 'AAPL'; // Example stock symbol (Apple Inc.)
+// let interval = '1day'; // Interval for candlesticks (e.g., '1min', '1hour', '1day')
+// let start_date = '2024-01-01'; // Start date (YYYY-MM-DD)
+// let end_date = '2024-01-31'; // End date (YYYY-MM-DD)
 
 app.get('/api/fetchCandlestickData', (req, res) => {
+    console.log('req', req.query);
+    const symbol = req.query.symbol;
+    const interval = req.query.interval;
+    const start_date = req.query.startDate;
+    const end_date = req.query.endDate;
     fetchCandlestickData(symbol, interval, start_date, end_date)
     .then(data => {
-        // console.log('Candlestick data:', data);
+        console.log('Candlestick data:', data.meta);
         res.send(JSON.stringify(data));
     })
     .catch(error => {
