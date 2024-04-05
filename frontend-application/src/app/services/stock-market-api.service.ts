@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApexAxisChartSeries, ApexChart, ApexTitleSubtitle, ApexXAxis } from 'ng-apexcharts';
-import { BehaviorSubject, take, tap } from 'rxjs';
+import { BehaviorSubject, first, take, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +52,10 @@ export class StockMarketApiService {
       endDate: this.endDate,
     }
 
-    this.http.get<any>('http://localhost:3000/api/fetchCandlestickData', { params }).subscribe(data => {
+    this.http.get<any>('http://localhost:3000/api/fetchCandlestickData', { params }).pipe(
+      first()
+    )
+    .subscribe(data => {
       this.candlestickData$.next(data);
     });
   }

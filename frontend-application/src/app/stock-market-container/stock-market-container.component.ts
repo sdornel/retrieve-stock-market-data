@@ -7,12 +7,11 @@ import { StockMarketApiService } from '../services/stock-market-api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
 import { StockMarketGraphComponent } from './stock-market-graph/stock-market-graph.component';
-import { StockMarketOptionsSelectorComponent } from './stock-market-options-selector/stock-market-options-selector.component';
 
 @Component({
   selector: 'app-stock-market-container',
   standalone: true,
-  imports: [MatToolbarModule, MatMenuModule, MatIconModule, HttpClientModule, StockMarketGraphComponent, StockMarketOptionsSelectorComponent],
+  imports: [MatToolbarModule, MatMenuModule, MatIconModule, HttpClientModule, StockMarketGraphComponent],
   providers: [StockMarketApiService],
   templateUrl: './stock-market-container.component.html',
   styleUrl: './stock-market-container.component.css'
