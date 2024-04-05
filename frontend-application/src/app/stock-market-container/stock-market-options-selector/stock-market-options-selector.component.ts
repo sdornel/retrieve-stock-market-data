@@ -38,18 +38,7 @@ export class StockMarketOptionsSelectorComponent implements OnInit {
     this.stockMarketApiService.startDate = this.optionsForm.value.startDate;
     this.stockMarketApiService.endDate = this.optionsForm.value.endDate;
 
-    this.stockMarketApiService.fetchCandlestickData().subscribe(res => {
-      console.log('Data fetched on form submit', res);
-    });
-    // this.stockMarketApiService.fetchCandlestickData()
-    // .pipe(takeUntil(this.$destroy)) // Use takeUntil for automatic unsubscription
-    // .subscribe({
-    //   next: (data) => {
-    //     console.log('Data fetched on form submit', data);
-    //     // Optionally trigger another action here
-    //   },
-    //   error: (error) => console.error(error)
-    // });
+    this.stockMarketApiService.fetchCandlestickData();
   }
 
   ngOnDestroy(): void {
