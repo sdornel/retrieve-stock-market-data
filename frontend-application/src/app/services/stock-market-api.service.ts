@@ -40,7 +40,7 @@ export class StockMarketApiService {
   constructor(private http: HttpClient) {}
 
   // fetches data depending on what params are used. either default params or used selected ones
-  fetchCandlestickData() {
+  fetchCandlestickData(): void {
     const params = {
       symbol: this.symbol,
       interval: this.interval,
@@ -54,9 +54,5 @@ export class StockMarketApiService {
     .subscribe(data => {
       this.candlestickData$.next(data);
     });
-  }
-
-  getCandlestickDataObservable() {
-    return this.candlestickData$.asObservable();
   }
 }

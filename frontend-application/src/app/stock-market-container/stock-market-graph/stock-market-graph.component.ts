@@ -58,7 +58,11 @@ export class StockMarketGraphComponent implements OnInit {
 
   ngOnInit(): void {
     this.setupForm();
+    this.fetchCandlestickData()
+    this.setupWebsocket();
+  }
 
+  fetchCandlestickData(): void {
     // populates the apx-chart component with data
     this.stockMarketApiService.candlestickData$
     .subscribe(data => {
@@ -79,8 +83,10 @@ export class StockMarketGraphComponent implements OnInit {
         x: item.datetime,
         y: [item.open, item.high, item.low, item.close]
       }));
-  });
+    });
+  }
 
+  setupWebsocket(): void {
     // Event handler for when the connection is established
     this.ws.onopen = () => {
       console.log('Connected to server');
@@ -99,7 +105,7 @@ export class StockMarketGraphComponent implements OnInit {
   }
 
 
-  setupForm() {
+  setupForm(): void {
     this.optionsForm = new FormGroup({
       symbol: new FormControl('AAPL', Validators.required,),
       interval: new FormControl('1day', Validators.required,),
@@ -108,7 +114,7 @@ export class StockMarketGraphComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.stockMarketApiService.symbol = this.optionsForm.value.symbol;
     this.stockMarketApiService.interval = this.optionsForm.value.interval;
     this.stockMarketApiService.startDate = this.optionsForm.value.startDate;
@@ -119,8 +125,7 @@ export class StockMarketGraphComponent implements OnInit {
 
 
   ngOnDestroy(): void {
-    this.$destroy.next();
-    this.$destroy.complete();
+    this.stockMarketApiService.candlestickData$.unsubscribe();
     if (this.ws) {
       this.ws.close();
     }

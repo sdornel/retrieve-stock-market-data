@@ -24,24 +24,6 @@ describe('StockMarketApiService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('fetchCandlestickData should make GET request', () => {
-    const testData = { data: 'test data' };
-
-    service.fetchCandlestickData();
-
-    const req = httpTestingController.expectOne(req => req.url.includes('fetchCandlestickData') && req.method === 'GET');
-    
-    expect(req.request.method).toEqual('GET');
-
-    // Respond with mock data, simulating a server response
-    req.flush(testData);
-
-    // Subscribe to the result and verify the outcome
-    service.getCandlestickDataObservable().subscribe(data => {
-      expect(data).toEqual(testData);
-    });
-  });
-
   it('should set candlestick data upon successful fetch', () => {
     const mockData = { someKey: 'someValue' };
     service.fetchCandlestickData();
