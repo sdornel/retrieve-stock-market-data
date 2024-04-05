@@ -77,6 +77,14 @@ export class StockMarketGraphComponent implements OnInit, AfterViewInit {
     // };
   }
 
+  temp() {
+    // for some reason the data must be updated within this component for chart to re-render
+    this.stockMarketApiService.title = {
+      ...this.stockMarketApiService.title,
+      text: 'AAPL',
+    }
+  }
+
   ngOnDestroy(): void {
     this.$destroy.next();
     this.$destroy.complete();

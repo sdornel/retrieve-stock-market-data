@@ -3,5 +3,6 @@
 </div> -->
 
 <div id="chart">
-  <apx-chart [series]="stockMarketApiService.series" [chart]="stockMarketApiService.chart" [xaxis]="stockMarketApiService.xaxis"></apx-chart>
+  <button (click)="temp()">click me</button>
+  <apx-chart [title]="stockMarketApiService.title" [series]="stockMarketApiService.series" [chart]="stockMarketApiService.chart" [xaxis]="stockMarketApiService.xaxis"></apx-chart>
 </div>
