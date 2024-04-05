@@ -25,7 +25,19 @@ describe('StockMarketApiService', () => {
   });
 
   it('should set candlestick data upon successful fetch', () => {
-    const mockData = { someKey: 'someValue' };
+    const mockData = {
+      meta: {
+        currency: 'curr',
+        exchange: 'new york',
+        exchange_timezone: 'etc',
+        interval: '1day',
+        mic_code: 'asdf',
+        symbol: 'AAPL',
+        type: 'string',
+      },
+      status: 'ok',
+      values: []
+    };
     service.fetchCandlestickData();
 
     const req = httpTestingController.expectOne({

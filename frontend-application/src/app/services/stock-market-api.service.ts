@@ -2,12 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApexAxisChartSeries, ApexChart, ApexTitleSubtitle, ApexXAxis } from 'ng-apexcharts';
 import { BehaviorSubject, first, take, tap } from 'rxjs';
+import { CandlestickData } from '../large-types/types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StockMarketApiService {
-  candlestickData$ = new BehaviorSubject<any>({});
+  candlestickData$ = new BehaviorSubject<CandlestickData>({
+    meta: null,
+    status: null,
+    values: [],
+  });
 
   candlestickData: Array<any> = [];
   series: ApexAxisChartSeries = [{
@@ -52,6 +57,7 @@ export class StockMarketApiService {
       first()
     )
     .subscribe(data => {
+      console.log('data', data);
       this.candlestickData$.next(data);
     });
   }
