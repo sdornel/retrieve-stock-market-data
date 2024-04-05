@@ -38,7 +38,8 @@ export class StockMarketOptionsSelectorComponent implements OnInit {
     this.stockMarketApiService.startDate = this.optionsForm.value.startDate;
     this.stockMarketApiService.endDate = this.optionsForm.value.endDate;
 
-    this.stockMarketApiService.fetchCandlestickData();
+    this.stockMarketApiService.fetchCandlestickData()// .subscribe();
+    // this.stockMarketApiService.candlestickData$.next(this.optionsForm.value.symbol);
   }
 
   ngOnDestroy(): void {
