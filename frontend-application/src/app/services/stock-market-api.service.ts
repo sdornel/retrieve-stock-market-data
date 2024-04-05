@@ -57,7 +57,6 @@ export class StockMarketApiService {
       first()
     )
     .subscribe(data => {
-      console.log('data', data);
       this.candlestickData$.next(data);
     });
   }
