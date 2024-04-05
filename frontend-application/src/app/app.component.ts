@@ -10,5 +10,5 @@ import { StockMarketContainerComponent } from './stock-market-container/stock-ma
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'frontend-for-testing-rate-limiter';
+
 }
