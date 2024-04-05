@@ -41,6 +41,7 @@ export class StockMarketApiService {
     this.fetchCandlestickData();
   }
 
+  // fetches data depending on what params are used. either default params or used selected ones
   fetchCandlestickData() {
     const params = {
       symbol: this.symbol,
