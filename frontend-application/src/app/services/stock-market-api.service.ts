@@ -31,9 +31,6 @@ export class StockMarketApiService {
 
   exchange: string = '';
   exchangeTimezone: string = '';
-  // interval: string = '';
-  // startDate: string = '';
-  // endDate: string = '';
   symbol: string = 'AAPL';
   interval: string = '1day';
   startDate: string = '2024-01-03';

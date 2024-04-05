@@ -61,6 +61,7 @@ export class StockMarketGraphComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.setupForm();
 
+    // populates the apx-chart component with data
     this.stockMarketApiService.candlestickData$
     .subscribe(data => {
       if (!data || !data.meta) return;
