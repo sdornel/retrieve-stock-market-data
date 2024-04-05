@@ -16,8 +16,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './stock-market-graph.component.css'
 })
 export class StockMarketGraphComponent implements OnInit {
-  private $destroy = new Subject<void>();
-
   optionsForm!: FormGroup;
 
   ws = new WebSocket('ws://localhost:3000');
