@@ -14,7 +14,7 @@ export class StockMarketApiService {
     values: [],
   });
 
-  candlestickData: Array<any> = [];
+
   series: ApexAxisChartSeries = [{
     name: 'candle',
     data: []
