@@ -3,7 +3,7 @@ WIP Gets stock market data and returns data based on parameters selected
 There are previous commits that are not shown. I had to delete the old repository for security reasons (I did something dumb)
 
 
-I still need to figure out how to impelement the websockets in a way that makes sense.
+I still need to figure out how to implement the websockets in a way that makes sense.
 
 To start the app:
 1. generate your own API keys from twelvedata API and finnhub API. Keep these in a .env file
