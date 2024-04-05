@@ -15,7 +15,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './stock-market-graph.component.html',
   styleUrl: './stock-market-graph.component.css'
 })
-export class StockMarketGraphComponent implements OnInit, AfterViewInit {
+export class StockMarketGraphComponent implements OnInit {
   private $destroy = new Subject<void>();
 
   optionsForm!: FormGroup;
@@ -52,10 +52,8 @@ export class StockMarketGraphComponent implements OnInit, AfterViewInit {
 
   constructor(
     public stockMarketApiService: StockMarketApiService,
-  ) {}
-
-  ngAfterViewInit(): void {
-
+  ) {
+    this.stockMarketApiService.fetchCandlestickData();
   }
 
   ngOnInit(): void {

@@ -37,9 +37,7 @@ export class StockMarketApiService {
   endDate: string = '2024-01-28';
 
 
-  constructor(private http: HttpClient) {
-    this.fetchCandlestickData();
-  }
+  constructor(private http: HttpClient) {}
 
   // fetches data depending on what params are used. either default params or used selected ones
   fetchCandlestickData() {

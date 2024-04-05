@@ -14,6 +14,4 @@ import { StockMarketGraphComponent } from './stock-market-graph/stock-market-gra
   templateUrl: './stock-market-container.component.html',
   styleUrl: './stock-market-container.component.css'
 })
-export class StockMarketContainerComponent {
-  constructor() {}
-}
+export class StockMarketContainerComponent {}
