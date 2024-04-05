@@ -5,6 +5,7 @@ require('./websocket/websocket-service'); // required for websocket to open. do 
 async function fetchCandlestickData(symbol, interval, start_date, end_date) {
     try {
         const apiKey = process.env.TWELVEDATA_API_KEY;
+        // see https://twelvedata.com/docs#endpoints
         const apiUrl = `https://api.twelvedata.com/time_series?symbol=${symbol}&interval=${interval}&start_date=${start_date}&end_date=${end_date}&apikey=${apiKey}`;
         const response = await axios.get(apiUrl);
         return response.data;
