@@ -1,6 +1,8 @@
 const axios = require('axios');
 const { app } = require('./server');
-require('./websocket/websocket-service'); // required for websocket to open. do not remove unless you know for sure the websocket can open
+const { WebsocketService } = require('./websocket/websocket-service');
+
+const websocketService = WebsocketService.getInstance(); // only ever use one instance
 
 async function fetchCandlestickData(symbol, interval, start_date, end_date) {
     try {
@@ -20,15 +22,17 @@ async function fetchCandlestickData(symbol, interval, start_date, end_date) {
 // let interval = '1day'; // Interval for candlesticks (e.g., '1min', '1hour', '1day')
 // let start_date = '2024-01-01'; // Start date (YYYY-MM-DD)
 // let end_date = '2024-01-31'; // End date (YYYY-MM-DD)
-
 app.get('/api/fetchCandlestickData', (req, res) => {
     const symbol = req.query.symbol;
     const interval = req.query.interval;
     const start_date = req.query.startDate;
     const end_date = req.query.endDate;
+
     fetchCandlestickData(symbol, interval, start_date, end_date)
     .then(data => {
         res.send(JSON.stringify(data));
+        websocketService.restart(symbol); // ensure we only have one websocket connection at a time
+        websocketService.subscribe(symbol);
     })
     .catch(error => {
         console.error('Error:', error);
