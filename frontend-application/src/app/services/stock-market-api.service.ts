@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApexAxisChartSeries, ApexChart, ApexTitleSubtitle, ApexXAxis } from 'ng-apexcharts';
 import { BehaviorSubject, first, take, tap } from 'rxjs';
-import { CandlestickData } from '../large-types/types';
+import { CandlestickData } from '../types/types';
 
 @Injectable({
   providedIn: 'root'

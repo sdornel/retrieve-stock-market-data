@@ -61,9 +61,11 @@ export class StockMarketGraphComponent implements OnInit {
   }
 
   fetchCandlestickData(): void {
+    console.log('this.stockMarketApiService.candlestickData$', this.stockMarketApiService.candlestickData$);
     // populates the apx-chart component with data
     this.stockMarketApiService.candlestickData$
     .subscribe(data => {
+      console.log('data', data);
       if (!data || !data.meta) return;
       this.title = {
         ...this.title,
