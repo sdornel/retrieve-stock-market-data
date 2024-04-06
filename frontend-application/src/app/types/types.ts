@@ -15,10 +15,11 @@ interface CandlestickIndexValue {
     low: string,
     open: string,
     volume: string,
+    close: string,
 }
 
 export interface CandlestickData {
-    meta: Metadata | null,
-    status: string | null,
+    meta: Metadata,
+    status: string,
     values: Array<CandlestickIndexValue>,
 }
