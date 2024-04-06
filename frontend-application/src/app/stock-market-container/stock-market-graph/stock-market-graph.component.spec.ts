@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { StockMarketGraphComponent } from './stock-market-graph.component';
 import { StockMarketApiService } from '../../services/stock-market-api.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CandlestickData } from '../../types/types';
 
@@ -9,7 +9,6 @@ describe('StockMarketGraphComponent', () => {
   let component: StockMarketGraphComponent;
   let fixture: ComponentFixture<StockMarketGraphComponent>;
   let mockStockMarketApiService: any;
-  let websocketSpy: jasmine.SpyObj<WebSocket>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,7 +25,7 @@ describe('StockMarketGraphComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('ngOnInit', () => {
+  describe('ngOnInit()', () => {
     beforeEach(() => {
       spyOn(component, 'setupForm');
       spyOn(component, 'fetchCandlestickData');
@@ -115,7 +114,7 @@ describe('StockMarketGraphComponent', () => {
     });
   });
 
-  describe('setupWebsocket', () => {
+  describe('setupWebsocket()', () => {
     let mockWebSocket: any;
   
     beforeEach(() => {
@@ -153,4 +152,121 @@ describe('StockMarketGraphComponent', () => {
       expect(console.log).toHaveBeenCalledWith('Disconnected from server');
     });
   });
+
+  describe('setupForm', () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(StockMarketGraphComponent);
+      component = fixture.componentInstance;
+      component.setupForm();
+    });
+  
+    it('should create the optionsForm with default values', () => {
+      expect(component.optionsForm).toBeDefined();
+      expect(component.optionsForm.value).toEqual({
+        symbol: 'AAPL',
+        interval: '1day',
+        startDate: '2024-01-01',
+        endDate: '2024-01-31'
+      });
+    });
+
+    it('should attach required validators to all form controls', () => {
+      const symbolControl = component.optionsForm.get('symbol') as AbstractControl;
+      const intervalControl = component.optionsForm.get('interval') as AbstractControl;
+      const startDateControl = component.optionsForm.get('startDate') as AbstractControl;
+      const endDateControl = component.optionsForm.get('endDate') as AbstractControl;
+
+      // Trigger the validators manually
+      symbolControl.setValue('');
+      intervalControl.setValue('');
+      startDateControl.setValue('');
+      endDateControl.setValue('');
+  
+      expect(symbolControl.valid).toBeFalsy();
+      expect(intervalControl.valid).toBeFalsy();
+      expect(startDateControl.valid).toBeFalsy();
+      expect(endDateControl.valid).toBeFalsy();
+  
+      expect(symbolControl.errors!['required']).toBeTruthy();
+      expect(intervalControl.errors!['required']).toBeTruthy();
+      expect(startDateControl.errors!['required']).toBeTruthy();
+      expect(endDateControl.errors!['required']).toBeTruthy();
+    });
   });
+
+  describe('onSubmit()', () => {
+    beforeEach(() => {
+      component.optionsForm = {
+        value: {
+          symbol: 'hi',
+          interval: '1day',
+          startDate: 'today',
+          endDate: 'tomorrow',
+        }
+      } as any;
+
+      mockStockMarketApiService = fixture.debugElement.injector.get(StockMarketApiService);
+      mockStockMarketApiService.fetchCandlestickData = jasmine.createSpy('fetchCandlestickData');
+      component.onSubmit();
+    });
+
+    it('sets state in stockMarketApiService', () => {
+      expect(component.stockMarketApiService.symbol).toEqual(component.optionsForm.value.symbol);
+      expect(component.stockMarketApiService.interval).toEqual(component.optionsForm.value.interval);
+      expect(component.stockMarketApiService.startDate).toEqual(component.optionsForm.value.startDate);
+      expect(component.stockMarketApiService.endDate).toEqual(component.optionsForm.value.endDate);
+    });
+
+    it('calls stockMarketApiService.fetchCandlestickData', () => {
+      expect(mockStockMarketApiService.fetchCandlestickData).toHaveBeenCalled();
+    });
+
+    it('sets shareprice to null', () => {
+      expect(component.sharePrice).toEqual(null);
+    });
+  });
+
+  describe('ngOnDestroy()', () => {
+    beforeEach(() => {
+      mockStockMarketApiService = fixture.debugElement.injector.get(StockMarketApiService);
+      mockStockMarketApiService.candlestickData$ = {
+        unsubscribe: jasmine.createSpy('unsubscribe'),
+      };
+    });
+
+    describe('websocket connection exists', () => {
+      beforeEach(() => {
+        component.ws = {
+          close: jasmine.createSpy('close'),
+        } as any;
+
+        component.ngOnDestroy();
+      });
+      it('unsubscribes to candlestickData$ behavior subject', () => {
+        expect(mockStockMarketApiService.candlestickData$.unsubscribe).toHaveBeenCalled();
+      });
+
+      it('closes the websocket', () => {
+        expect(component.ws.close).toHaveBeenCalled();
+      });
+    });
+
+    describe('websocket connection does not exist', () => {
+      beforeEach(() => {
+        component.ws = null as any;
+        component.ngOnDestroy();
+      });
+      it('unsubscribes to candlestickData$ behavior subject', () => {
+        expect(mockStockMarketApiService.candlestickData$.unsubscribe).toHaveBeenCalled();
+      });
+
+      it('does not attempt to close the websocket', () => {
+        // Since there's no direct action to verify (we cannot check a method call on a null object),
+        // this test ensures that ngOnDestroy doesn't throw any error, which can be considered
+        // as passing the test that it doesn't attempt to close an undefined websocket.
+        // This approach is more about ensuring the absence of errors rather than spying on actions.
+        expect(() => component.ngOnDestroy()).not.toThrow();
+      });
+    });
+  });
+});
