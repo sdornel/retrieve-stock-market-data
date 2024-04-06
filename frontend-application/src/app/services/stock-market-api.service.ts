@@ -9,8 +9,16 @@ import { CandlestickData } from '../types/types';
 })
 export class StockMarketApiService {
   candlestickData$ = new BehaviorSubject<CandlestickData>({
-    meta: null,
-    status: null,
+    meta: {
+      symbol: '',
+      type: '',
+      mic_code: '',
+      interval: '',
+      exchange_timezone: '',
+      exchange: '',
+      currency: '',
+    },
+    status: '',
     values: [],
   });
 
