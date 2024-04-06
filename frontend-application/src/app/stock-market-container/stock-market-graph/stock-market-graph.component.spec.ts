@@ -12,9 +12,6 @@ describe('StockMarketGraphComponent', () => {
   let websocketSpy: jasmine.SpyObj<WebSocket>;
 
   beforeEach(async () => {
-    websocketSpy = jasmine.createSpyObj('WebSocket', ['send', 'close', 'onopen', 'onmessage', 'onclose']);
-    spyOn(window, 'WebSocket').and.returnValue(websocketSpy as unknown as WebSocket);
-
     await TestBed.configureTestingModule({
       imports: [StockMarketGraphComponent, ReactiveFormsModule, HttpClientTestingModule],
       providers: [StockMarketApiService]
@@ -117,4 +114,43 @@ describe('StockMarketGraphComponent', () => {
       });
     });
   });
-});
+
+  describe('setupWebsocket', () => {
+    let mockWebSocket: any;
+  
+    beforeEach(() => {
+      mockWebSocket = {
+        onopen: null,
+        onmessage: null,
+        onclose: null,
+        send: jasmine.createSpy('send'),
+        close: jasmine.createSpy('close')
+      };
+  
+      component.ws = mockWebSocket as unknown as WebSocket;
+      spyOn(console, 'log');
+      component.setupWebsocket();
+    });
+  
+    it('should log "Connected to server" when connected', () => {
+      mockWebSocket.onopen();
+      expect(console.log).toHaveBeenCalledWith('Connected to server');
+    });
+  
+    it('should update sharePrice on receiving a valid message', () => {
+      const messageEvent = { data: JSON.stringify({ type: 'stockUpdate', data: [{ p: 120 }] }) } as MessageEvent;
+      mockWebSocket.onmessage(messageEvent);
+      expect(component.sharePrice).toBe(120);
+    });
+  
+    it('should ignore ping messages', () => {
+      mockWebSocket.onmessage({ data: JSON.stringify({ type: 'ping' }) } as MessageEvent);
+      expect(component.sharePrice).toBeNull();
+    });
+  
+    it('should log "Disconnected from server" when disconnected', () => {
+      mockWebSocket.onclose();
+      expect(console.log).toHaveBeenCalledWith('Disconnected from server');
+    });
+  });
+  });
