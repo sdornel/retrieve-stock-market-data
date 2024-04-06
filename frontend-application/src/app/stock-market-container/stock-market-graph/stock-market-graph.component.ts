@@ -19,6 +19,8 @@ export class StockMarketGraphComponent implements OnInit {
   optionsForm!: FormGroup;
 
   ws = new WebSocket('ws://localhost:3000');
+  sharePrice: number | null = null;
+
   candlestickData: Array<any> = [];
   series: ApexAxisChartSeries = [{
     name: 'candle',
@@ -36,7 +38,7 @@ export class StockMarketGraphComponent implements OnInit {
     type: 'datetime'
   };
   title: ApexTitleSubtitle = {
-    text: '',
+    text: 'AAPL',
     align: 'left'
   };
 
@@ -45,8 +47,6 @@ export class StockMarketGraphComponent implements OnInit {
   interval: string = '';
   startDate: string = '';
   endDate: string = '';
-
-
 
   constructor(
     public stockMarketApiService: StockMarketApiService,
@@ -93,7 +93,9 @@ export class StockMarketGraphComponent implements OnInit {
     // Event handler for receiving messages from the server
     this.ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      console.log('message', message);
+      if (message.type !== 'ping') {
+        this.sharePrice = message.data[message.data.length-1].p // get latest share price from the retrieved websocket data;
+      }
     };
 
     // Event handler for handling disconnection
@@ -119,6 +121,7 @@ export class StockMarketGraphComponent implements OnInit {
     this.stockMarketApiService.endDate = this.optionsForm.value.endDate;
 
     this.stockMarketApiService.fetchCandlestickData();
+    this.sharePrice = null; // after fetching new candlestick data we want to reset the price
   }
 
 
