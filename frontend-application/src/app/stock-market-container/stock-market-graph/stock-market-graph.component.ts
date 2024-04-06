@@ -56,7 +56,7 @@ export class StockMarketGraphComponent implements OnInit {
 
   ngOnInit(): void {
     this.setupForm();
-    this.fetchCandlestickData()
+    this.fetchCandlestickData();
     this.setupWebsocket();
   }
 
