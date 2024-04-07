@@ -39,3 +39,5 @@ app.get('/api/fetchCandlestickData', (req, res) => {
         res.send(JSON.stringify(error));
     });
 });
+
+module.exports = { fetchCandlestickData };
