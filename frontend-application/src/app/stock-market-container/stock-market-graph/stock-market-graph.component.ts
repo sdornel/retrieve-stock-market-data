@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApexAxisChartSeries, ApexChart, ApexTitleSubtitle, ApexXAxis, ApexYAxis, NgApexchartsModule } from 'ng-apexcharts';
 import { StockMarketApiService } from '../../services/stock-market-api.service';
-import { Subject } from 'rxjs';
 import { CommonModule, NgIf } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { WebSocketService } from '../../services/websocket.service';
 
 @Component({
   selector: 'app-stock-market-graph',
@@ -20,12 +20,15 @@ export class StockMarketGraphComponent implements OnInit {
 
   ws = new WebSocket('ws://localhost:3000');
   sharePrice: number | null = null;
+  displayErrorMessage = false;
+  displayMarketClosedMessage = false;
 
   candlestickData: Array<any> = [];
   series: ApexAxisChartSeries = [{
     name: 'candle',
     data: []
   }];
+
   chart: ApexChart = {
     type: 'candlestick',
     height: 350,
@@ -48,8 +51,11 @@ export class StockMarketGraphComponent implements OnInit {
   startDate: string = '';
   endDate: string = '';
 
+  lastClosingPrice: number | null = null;
+
   constructor(
     public stockMarketApiService: StockMarketApiService,
+    private websocketService: WebSocketService,
   ) {
     this.stockMarketApiService.fetchCandlestickData();
   }
@@ -74,34 +80,42 @@ export class StockMarketGraphComponent implements OnInit {
       this.interval = data.meta.interval;
       this.startDate = data.values[0].datetime;
       this.endDate = data.values[data.values.length - 1].datetime;
-      // i believe i am forced to use the USD currency and exchanges. need to decide what to "allow" the user to do and see
-      // i do not want to pay money for this API
-
+      // I believe I am forced to use the USD currency and exchanges. Need to decide what to "allow" the user to do and see
+      // I do not want to pay money for this API
+      
       this.series[0].data = data.values.map((item: any) => ({
         x: item.datetime,
-        y: [item.open, item.high, item.low, item.close]
+        y: [item.open, item.high, item.low, item.close] // if you modify this array ensure you update the html file for price at closing
       }));
+
+      this.lastClosingPrice = this.series[0].data[0].y;
     });
   }
 
   setupWebsocket(): void {
-    // Event handler for when the connection is established
     this.ws.onopen = () => {
-      console.log('Connected to server');
+      console.log('Connected to ws server');
     };
 
-    // Event handler for receiving messages from the server
     this.ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
+
+      // const message = { type: 'ping' } as any; // for debugging purposes
       if (message.type !== 'ping') {
         this.sharePrice = message.data[message.data.length-1].p // get latest share price from the retrieved websocket data;
-      }
-    };
+        this.displayMarketClosedMessage = false;
+        this.displayErrorMessage = false;
+      } else {
+        this.websocketService.trackTimeToNonpingResponse().subscribe(error => {
+          this.displayErrorMessage = error;
+          this.displayMarketClosedMessage = false;
+        });
+      };
 
-    // Event handler for handling disconnection
-    this.ws.onclose = () => {
-      console.log('Disconnected from server');
-    };
+      this.ws.onclose = () => {
+        console.log('Disconnected from server');
+      };
+    }
   }
 
 
