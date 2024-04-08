@@ -111,11 +111,11 @@ export class StockMarketGraphComponent implements OnInit {
           this.displayMarketClosedMessage = false;
         });
       };
-
-      this.ws.onclose = () => {
-        console.log('Disconnected from server');
-      };
     }
+
+    this.ws.onclose = () => {
+      console.log('Disconnected from server');
+    };
   }
 
 
