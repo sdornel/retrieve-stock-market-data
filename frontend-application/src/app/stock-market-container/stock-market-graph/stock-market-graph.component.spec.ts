@@ -131,9 +131,9 @@ describe('StockMarketGraphComponent', () => {
       component.setupWebsocket();
     });
   
-    it('should log "Connected to server" when connected', () => {
+    it('should log "Connected to ws server" when connected', () => {
       mockWebSocket.onopen();
-      expect(console.log).toHaveBeenCalledWith('Connected to server');
+      expect(console.log).toHaveBeenCalledWith('Connected to ws server');
     });
   
     it('should update sharePrice on receiving a valid message', () => {
