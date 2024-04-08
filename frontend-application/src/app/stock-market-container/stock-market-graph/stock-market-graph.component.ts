@@ -97,7 +97,7 @@ export class StockMarketGraphComponent implements OnInit {
       console.log('Connected to ws server');
     };
 
-    this.ws.onmessage = (event) => {
+    this.ws.onmessage = (event: MessageEvent<any>) => {
       const message = JSON.parse(event.data);
 
       // const message = { type: 'ping' } as any; // for debugging purposes
@@ -106,7 +106,7 @@ export class StockMarketGraphComponent implements OnInit {
         this.displayMarketClosedMessage = false;
         this.displayErrorMessage = false;
       } else {
-        this.websocketService.trackTimeToNonpingResponse().subscribe(error => {
+        this.websocketService.trackTimeToNonpingResponse().subscribe((error: boolean) => {
           this.displayErrorMessage = error;
           this.displayMarketClosedMessage = false;
         });

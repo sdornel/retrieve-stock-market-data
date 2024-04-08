@@ -9,7 +9,7 @@ export class WebSocketService {
 
   constructor() {}
 
-  trackTimeToNonpingResponse() {
+  trackTimeToNonpingResponse(): Observable<boolean> {
     // return timer(6000).pipe(map(() => true));
     const now = Date.now();
 
