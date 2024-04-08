@@ -5,12 +5,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { StockMarketApiService } from '../services/stock-market-api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StockMarketGraphComponent } from './stock-market-graph/stock-market-graph.component';
+import { WebSocketService } from '../services/websocket.service';
 
 @Component({
   selector: 'app-stock-market-container',
   standalone: true,
   imports: [MatToolbarModule, MatMenuModule, MatIconModule, HttpClientModule, StockMarketGraphComponent],
-  providers: [StockMarketApiService],
+  providers: [StockMarketApiService, WebSocketService],
   templateUrl: './stock-market-container.component.html',
   styleUrl: './stock-market-container.component.css'
 })
