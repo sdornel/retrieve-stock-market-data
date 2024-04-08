@@ -22,10 +22,9 @@ export class StockMarketApiService {
     values: [],
   });
 
-
   series: ApexAxisChartSeries = [{
     name: 'candle',
-    data: []
+    data: [{ x: '', y: [] }]
   }];
   chart: ApexChart = {
     type: 'candlestick',
@@ -64,7 +63,7 @@ export class StockMarketApiService {
     this.http.get<any>('http://localhost:3000/api/fetchCandlestickData', { params }).pipe(
       first()
     )
-    .subscribe(data => {
+    .subscribe((data: CandlestickData) => {
       this.candlestickData$.next(data);
     });
   }
