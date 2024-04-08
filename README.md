@@ -7,7 +7,7 @@ Gets stock market data and returns data based on parameters selected
 There are previous commits that are not shown. I had to delete the old repository for security reasons (I did something dumb)
 
 
-If you want to run unit tests in headless mode: ng test --no-watch --no-progress --browsers=ChromeHeadless
+If you want to run client unit tests in headless mode: ng test --no-watch --no-progress --browsers=ChromeHeadless
 
 To start the app:
 1. generate your own API keys from twelvedata API and finnhub API. Keep these in a .env file
