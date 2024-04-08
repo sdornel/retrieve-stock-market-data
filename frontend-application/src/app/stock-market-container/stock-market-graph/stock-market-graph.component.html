@@ -3,7 +3,15 @@
     <div id="chart">
       <apx-chart [title]="title" [series]="series" [chart]="chart" [xaxis]="xaxis"></apx-chart>
       <br/>
-      <h4>Current price: {{ sharePrice !== null ? sharePrice : 'Loading... please be patient' }}</h4>
+      <div *ngIf="!displayErrorMessage && !displayMarketClosedMessage">
+        <h4>Current price: {{ sharePrice !== null ? sharePrice : 'Loading... please be patient' }}</h4>
+      </div>
+      <!-- <div *ngIf="displayMarketClosedMessage && !displayErrorMessage">
+        <h4>The market is closed. Price at closing was {{ lastClosingPrice }}</h4>
+      </div> -->
+      <div *ngIf="displayErrorMessage && !displayMarketClosedMessage">
+        <h4>Current price: error retrieving data</h4>
+      </div>
     </div>
   </div>
   
