@@ -5,7 +5,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { WebSocketService } from '../../services/websocket.service';
+import { WebSocketService } from '../../services/websocket-helper.service';
 
 @Component({
   selector: 'app-stock-market-graph',
