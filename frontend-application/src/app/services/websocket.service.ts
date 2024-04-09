@@ -5,7 +5,7 @@ import { Observable, map, of, pipe, timer } from 'rxjs';
   providedIn: 'root',
 })
 export class WebSocketService {
-  private firstCallTime: number | null = null;
+  firstCallTime: number | null = null;
 
   constructor() {}
 
@@ -23,11 +23,9 @@ export class WebSocketService {
     const elapsedSinceFirstCall = now - this.firstCallTime;
     if (elapsedSinceFirstCall >= 4000) {
       this.firstCallTime = null;
-      // If 6 seconds have already elapsed since the first call, return true.
       return of(true);
     } else {
       this.firstCallTime = null;
-      // If it hasn't been 6 seconds yet, wait the remaining time before returning true.
       return of(false);
     }
   }
