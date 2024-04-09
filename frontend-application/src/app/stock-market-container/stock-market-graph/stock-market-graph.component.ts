@@ -18,7 +18,7 @@ import { WebSocketService } from '../../services/websocket.service';
 export class StockMarketGraphComponent implements OnInit {
   optionsForm!: FormGroup;
 
-  ws = new WebSocket('ws://localhost:3000');
+  ws: WebSocket = new WebSocket('ws://localhost:3000');
   sharePrice: number | null = null;
   displayErrorMessage = false;
   displayMarketClosedMessage = false;
@@ -63,7 +63,6 @@ export class StockMarketGraphComponent implements OnInit {
   ngOnInit(): void {
     this.setupForm();
     this.fetchCandlestickData();
-    this.setupWebsocket();
   }
 
   fetchCandlestickData(): void {
@@ -89,6 +88,9 @@ export class StockMarketGraphComponent implements OnInit {
       }));
 
       this.lastClosingPrice = this.series[0].data[0].y;
+
+      this.ws = new WebSocket('ws://localhost:3000');
+      this.setupWebsocket();
     });
   }
 
@@ -99,16 +101,13 @@ export class StockMarketGraphComponent implements OnInit {
 
     this.ws.onmessage = (event: MessageEvent<any>) => {
       const message = JSON.parse(event.data);
-
       // const message = { type: 'ping' } as any; // for debugging purposes
       if (message.type !== 'ping') {
         this.sharePrice = message.data[message.data.length-1].p // get latest share price from the retrieved websocket data;
-        this.displayMarketClosedMessage = false;
         this.displayErrorMessage = false;
       } else {
         this.websocketService.trackTimeToNonpingResponse().subscribe((error: boolean) => {
           this.displayErrorMessage = error;
-          this.displayMarketClosedMessage = false;
         });
       };
     }
@@ -133,9 +132,12 @@ export class StockMarketGraphComponent implements OnInit {
     this.stockMarketApiService.interval = this.optionsForm.value.interval;
     this.stockMarketApiService.startDate = this.optionsForm.value.startDate;
     this.stockMarketApiService.endDate = this.optionsForm.value.endDate;
-
-    this.stockMarketApiService.fetchCandlestickData();
     this.sharePrice = null; // after fetching new candlestick data we want to reset the price
+
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.close();
+    }
+    this.stockMarketApiService.fetchCandlestickData();
   }
 
 
