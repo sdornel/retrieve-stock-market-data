@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { StockMarketApiService } from './stock-market-api.service';
-import { WebSocketService } from './websocket.service';
+import { WebSocketService } from './websocket-helper.service';
 import { Observable, of } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
