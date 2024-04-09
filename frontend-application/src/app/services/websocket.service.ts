@@ -10,7 +10,6 @@ export class WebSocketService {
   constructor() {}
 
   trackTimeToNonpingResponse(): Observable<boolean> {
-    // return timer(6000).pipe(map(() => true));
     const now = Date.now();
 
     // If this is the first call, record the time and return false.
@@ -22,7 +21,7 @@ export class WebSocketService {
     }
 
     const elapsedSinceFirstCall = now - this.firstCallTime;
-    if (elapsedSinceFirstCall >= 6000) {
+    if (elapsedSinceFirstCall >= 5000) {
       this.firstCallTime = null;
       // If 6 seconds have already elapsed since the first call, return true.
       return of(true);
@@ -31,17 +30,5 @@ export class WebSocketService {
       // If it hasn't been 6 seconds yet, wait the remaining time before returning true.
       return of(false);
     }
-  }
-
-  // I need to see if this function is even necessary.
-  // At the very least it needs to be refactored.
-  isMarketClosed(): boolean {
-    const now = new Date();
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
-    console.log(currentHour, currentMinute);
-    // Returns true if it is later than 17:00 or earlier than 9:30
-    // somehow trades still happen after 16:30
-    return (currentHour > 17 || (currentHour <= 9 && currentMinute < 30));
   }
 }
