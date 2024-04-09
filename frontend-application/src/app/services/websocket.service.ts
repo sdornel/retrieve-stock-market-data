@@ -21,7 +21,7 @@ export class WebSocketService {
     }
 
     const elapsedSinceFirstCall = now - this.firstCallTime;
-    if (elapsedSinceFirstCall >= 5000) {
+    if (elapsedSinceFirstCall >= 4000) {
       this.firstCallTime = null;
       // If 6 seconds have already elapsed since the first call, return true.
       return of(true);
