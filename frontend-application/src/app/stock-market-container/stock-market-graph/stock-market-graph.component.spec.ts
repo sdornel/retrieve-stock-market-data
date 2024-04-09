@@ -29,7 +29,6 @@ describe('StockMarketGraphComponent', () => {
     beforeEach(() => {
       spyOn(component, 'setupForm');
       spyOn(component, 'fetchCandlestickData');
-      spyOn(component, 'setupWebsocket');
       component.ngOnInit();
     });
     it('calls setupForm', () => {
@@ -37,9 +36,6 @@ describe('StockMarketGraphComponent', () => {
     });
     it('calls fetchCandlestickData', () => {
       expect(component.fetchCandlestickData).toHaveBeenCalled();
-    });
-    it('calls setupWebsocket', () => {
-      expect(component.setupWebsocket).toHaveBeenCalled();
     });
   });
 
@@ -247,7 +243,7 @@ describe('StockMarketGraphComponent', () => {
       });
 
       it('closes the websocket', () => {
-        expect(component.ws.close).toHaveBeenCalled();
+        expect(component.ws?.close).toHaveBeenCalled();
       });
     });
 
