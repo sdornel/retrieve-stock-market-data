@@ -6,11 +6,9 @@
       <div *ngIf="!displayErrorMessage && !displayMarketClosedMessage">
         <h4>Current price: {{ sharePrice !== null ? sharePrice : 'Loading... please be patient' }}</h4>
       </div>
-      <!-- <div *ngIf="displayMarketClosedMessage && !displayErrorMessage">
-        <h4>The market is closed. Price at closing was {{ lastClosingPrice }}</h4>
-      </div> -->
-      <div *ngIf="displayErrorMessage && !displayMarketClosedMessage">
-        <h4>Current price: error retrieving data</h4>
+
+      <div *ngIf="displayErrorMessage">
+        <h4>Current price: the data could not be retrieved at this time</h4>
       </div>
     </div>
   </div>
