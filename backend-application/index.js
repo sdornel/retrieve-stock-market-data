@@ -2,7 +2,7 @@ const axios = require('axios');
 const { app } = require('./server');
 const { WebsocketService } = require('./websocket/websocket-service');
 
-const websocketService = WebsocketService.getInstance(); // only ever use one instance
+const websocketService = WebsocketService.getInstance(); // creates a singleton
 
 async function fetchCandlestickData(symbol, interval, start_date, end_date) {
     try {
