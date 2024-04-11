@@ -45,11 +45,19 @@ export class StockMarketApiService {
   exchangeTimezone: string = '';
   symbol: string = 'AAPL';
   interval: string = '1day';
-  startDate: string = '2024-01-03';
-  endDate: string = '2024-01-28';
-
+  
+  startDate = '';
+  endDate = '';
 
   constructor(private http: HttpClient) {}
+
+  getStartAndEndDates(): { startDate: string; endDate: string; } {
+    const endDate = new Date().toISOString().split('T')[0];
+    let date = new Date(endDate);
+    date.setMonth(date.getMonth() - 1); // subtract one month
+    const startDate = date.toISOString().split('T')[0];
+    return { startDate, endDate };
+  }
 
   // fetches data depending on what params are used. either default params or used selected ones
   fetchCandlestickData(): void {

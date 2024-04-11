@@ -150,11 +150,17 @@ describe('StockMarketGraphComponent', () => {
   });
 
   describe('setupForm', () => {
+    const mockStartDate = '2024-01-01';
+    const mockEndDate = '2024-01-31';
     beforeEach(() => {
       fixture = TestBed.createComponent(StockMarketGraphComponent);
       mockStockMarketApiService = fixture.debugElement.injector.get(StockMarketApiService);
-      mockStockMarketApiService.startDate = '2024-01-01';
-      mockStockMarketApiService.endDate = '2024-01-31';
+      // mockStockMarketApiService. = '2024-01-01';
+      // mockStockMarketApiService.endDate = '2024-01-31';
+      mockStockMarketApiService.getStartAndEndDates = jasmine.createSpy('getStartAndEndDates').and.returnValue({
+        startDate: '2024-01-01',
+        endDate: '2024-01-31',
+      });
       component = fixture.componentInstance;
       component.setupForm();
     });
@@ -164,8 +170,8 @@ describe('StockMarketGraphComponent', () => {
       expect(component.optionsForm.value).toEqual({
         symbol: 'AAPL',
         interval: '1day',
-        startDate: mockStockMarketApiService.startDate,
-        endDate: mockStockMarketApiService.endDate
+        startDate: mockStartDate,
+        endDate: mockEndDate
       });
     });
 
