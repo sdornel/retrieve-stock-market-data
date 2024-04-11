@@ -152,6 +152,9 @@ describe('StockMarketGraphComponent', () => {
   describe('setupForm', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(StockMarketGraphComponent);
+      mockStockMarketApiService = fixture.debugElement.injector.get(StockMarketApiService);
+      mockStockMarketApiService.startDate = '2024-01-01';
+      mockStockMarketApiService.endDate = '2024-01-31';
       component = fixture.componentInstance;
       component.setupForm();
     });
@@ -161,8 +164,8 @@ describe('StockMarketGraphComponent', () => {
       expect(component.optionsForm.value).toEqual({
         symbol: 'AAPL',
         interval: '1day',
-        startDate: '2024-01-01',
-        endDate: '2024-01-31'
+        startDate: mockStockMarketApiService.startDate,
+        endDate: mockStockMarketApiService.endDate
       });
     });
 

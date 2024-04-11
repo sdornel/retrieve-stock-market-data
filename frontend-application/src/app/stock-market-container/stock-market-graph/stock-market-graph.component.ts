@@ -122,8 +122,8 @@ export class StockMarketGraphComponent implements OnInit {
     this.optionsForm = new FormGroup({
       symbol: new FormControl('AAPL', Validators.required,),
       interval: new FormControl('1day', Validators.required,),
-      startDate: new FormControl('2024-01-01', Validators.required,),
-      endDate: new FormControl('2024-01-31', Validators.required,)
+      startDate: new FormControl(this.stockMarketApiService.startDate, Validators.required,),
+      endDate: new FormControl(this.stockMarketApiService.endDate, Validators.required,)
     });
   }
 
