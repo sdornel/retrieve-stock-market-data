@@ -1,3 +1,6 @@
+Note to self:
+If you want to run client unit tests in headless mode: ng test --no-watch --no-progress --browsers=ChromeHeadless
+
 # Temp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.1.
