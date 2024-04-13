@@ -12,6 +12,6 @@ services:
   frontend:
     build: ./frontend-application
     ports:
-      - "4200:4200"
+      - "4200:80" # nginx always wants to be on port 80 by default
     depends_on:
       - backend

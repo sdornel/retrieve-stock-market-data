@@ -20,7 +20,9 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy static assets from builder stage
-COPY --from=builder /usr/src/app/dist/temp /usr/share/nginx/html
+COPY --from=builder /usr/src/app/dist/temp/browser /usr/share/nginx/html
+
+COPY /nginx.conf  /etc/nginx/conf.d/default.conf
 
 # Expose port 4200
 EXPOSE 4200
