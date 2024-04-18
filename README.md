@@ -1,5 +1,7 @@
 Gets stock market data and returns data based on parameters selected
 
+<img width="920" alt="Screenshot 2024-04-11 at 11 51 58 AM" src="https://github.com/sdornel/retrieve-stock-market-data/assets/59425977/22d85895-6006-4778-a39e-96f3006675ab">
+
 To start the app:
 1. generate your own API keys from twelvedata API and finnhub API. Keep these in a .env file inside the backend-application folder
 Your .env file should look something like this:
